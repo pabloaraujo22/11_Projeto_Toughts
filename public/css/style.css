@@ -54,6 +54,20 @@
 }
 
 
+/* MESSAGE */
+
+.message {
+    padding: 1em;
+    color: #004085;
+    background-color: #ccc;
+    border: 1px solid #b8daff;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 auto 2em;
+    max-width: 60%;
+}
+
+
 /* LOGIN E REGISTER*/
 
 .auth-container {
@@ -96,10 +110,10 @@
 
 
 /* .paleta-ghost-pepper {
-    color: #e74c32;
-    color: #373737;
-    color: #f6f6f6;
-    color: #0c0b0b
+    color: #e35f21;
+    color: #eef8f7;
+    color: #363636;
+    color: #010506
 } */
 
 form input[type='submit'],
