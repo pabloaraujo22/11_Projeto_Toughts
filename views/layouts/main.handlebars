@@ -18,8 +18,14 @@
             </a>
             <ul>
                 <li><a href="/">Pensamentos</a></li>
+                {{#if session.userid}}
+                <li><a href="/logout">Sair</a></li>
+                <li><a href="/dashboard">Meus Pensamentos</a></li>
+                {{else}}
                 <li><a href="/login">Entrar</a></li>
                 <li><a href="/register">Registrar</a></li>
+
+                {{/if}}
             </ul>
         </nav>
     </header>
