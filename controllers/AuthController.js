@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
+const { raw } = require('express')
 
 
 module.exports = class AuthController {
@@ -9,7 +10,7 @@ module.exports = class AuthController {
 
     static async loginPost(req, res) {
         const { email, password } = req.body
-        const user = await User.findOne({ where: { email } })
+        const user = await User.findOne({ where: { email: email }, raw: true })
 
         if (!user) {
             req.flash('message', 'Usuário não encontrado')

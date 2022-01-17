@@ -8,7 +8,11 @@ module.exports = class ToughtController {
 
     static async dashboard(req, res) {
         const userid = req.session.userid
+        console.log(userid)
 
+        if (!userid) {
+            return res.redirect('/login')
+        }
         const user = await User.findOne({
             where: {
                 id: userid
@@ -17,9 +21,6 @@ module.exports = class ToughtController {
             plain: true
         })
 
-        if (!user) {
-            return res.redirect('/login')
-        }
         let toughts = (user.Toughts).map((result) => result.dataValues)
         console.log(toughts)
 
@@ -48,5 +49,25 @@ module.exports = class ToughtController {
             console.log(erro)
         }
 
+    }
+
+    static async removeTought(req, res) {
+        const UserId = req.session.userid
+        const id = req.body.id
+
+        if (!UserId) {
+            return res.redirect('/login')
+        }
+
+        try {
+            await Tought.destroy({ where: { id, UserId } })
+
+            req.flash('message', 'Pensamento removido com Sucesso!')
+            req.session.save(() => {
+                res.redirect('/toughts/dashboard')
+            })
+        } catch (erro) {
+            console.log(erro)
+        }
     }
 }
