@@ -7,7 +7,23 @@ module.exports = class ToughtController {
     }
 
     static async dashboard(req, res) {
-        res.render('toughts/dashboard')
+        const userid = req.session.userid
+
+        const user = await User.findOne({
+            where: {
+                id: userid
+            },
+            include: Tought,
+            plain: true
+        })
+
+        if (!user) {
+            return res.redirect('/login')
+        }
+        let toughts = (user.Toughts).map((result) => result.dataValues)
+        console.log(toughts)
+
+        res.render('toughts/dashboard', { toughts })
     }
 
     static async createTought(req, res) {
