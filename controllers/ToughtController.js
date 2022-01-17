@@ -20,11 +20,15 @@ module.exports = class ToughtController {
             include: Tought,
             plain: true
         })
-
-        let toughts = (user.Toughts).map((result) => result.dataValues)
+        const toughts = (user.Toughts).map((result) => result.dataValues)
         console.log(toughts)
 
-        res.render('toughts/dashboard', { toughts })
+        let emptyToughts = false
+        if (toughts.length === 0) {
+            emptyToughts = true
+        }
+
+        res.render('toughts/dashboard', { toughts, emptyToughts })
     }
 
     static async createTought(req, res) {
