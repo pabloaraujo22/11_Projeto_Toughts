@@ -74,4 +74,42 @@ module.exports = class ToughtController {
             console.log(erro)
         }
     }
+
+    static async updateTought(req, res) {
+        const id = req.params.id
+        const UserId = req.session.userid
+
+        if (!UserId) {
+            return res.redirect('/login')
+        }
+
+        try {
+            const tought = await Tought.findOne({ where: { id, UserId }, raw: true })
+            req.session.save(() => {
+                res.render('toughts/edit', { tought })
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    static async updateToughtSave(req, res) {
+        const { id, title } = req.body
+        const UserId = req.session.userid
+
+        if (!UserId) {
+            return res.redirect('/login')
+        }
+
+        try {
+            const tought = { id, title, UserId }
+            await Tought.update(tought, { where: { id, UserId } })
+            req.flash('message', 'Pensamento editado com Sucesso!')
+            req.session.save(() => {
+                res.redirect('/toughts/dashboard')
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
